@@ -1,0 +1,16 @@
+{
+  "coauthors": {
+    "io": {
+      "name": "Israel Oyekan",
+      "email": "israel.f.oyekan@students.cookman.edu"
+    },
+    "la": {
+      "name": "Luiz Andrade",
+      "email": "me@luizandrade.com"
+    },
+    "lp": {
+      "name": "Luis Pagan",
+      "email": "stemluis@gmail.com"
+    }
+  }
+}
