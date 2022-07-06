@@ -45,3 +45,5 @@ jobs:
         with:
            name: code-coverage-report
            path: htmlcov
+
+git checkout -b coveragereports archive/<user_input>
