@@ -1,5 +1,6 @@
 import phonenumbers
 from phonenumbers import timezone
+#install the phone number module first
 # This is used to accept the user inputs and will be eventually stored in a database.
 # Save name and phone number once. It'll be used for notifications for the user.
 # Inputs needed: Name, Phone number, email(optional), food items bought.
@@ -15,7 +16,8 @@ name = input("Enter your full name: ")
   
 # Parsing String to Phone number
 # Phone number format: (+Countrycode)xxxxxxxxxx
-phoneNumber = phonenumbers.parse("+919876543210")
+digit = input("Enter your digits in the format (+Countrycode)xxxxxxxxxx: ")
+phoneNumber = phonenumbers.parse(digit)
 # Pass the parsed phone number in below function
 timeZone = timezone.time_zones_for_number(phoneNumber)
 # This will print the phone number and 
@@ -23,156 +25,119 @@ timeZone = timezone.time_zones_for_number(phoneNumber)
 print(phoneNumber)
 print(timeZone)
 
-#store data for fruits
+
+text = """ Available categories of food items are:
+    Fruits — Apples, bananas, etc. 
+    Vegetables - Potatoes, onions, carrots, etc. 
+    Canned goods — Soup, tuna, fruit, beans, etc. 
+    Dairy — Butter, cheese, eggs, milk,etc. 
+    Meat — Chicken, beef, pork, sausage, bacon etc. 
+    Fish and Seafood— Shrimp, crab, cod, tuna, etc. 
+    Deli— Cheese, salami, etc.
+    Condiments and Spices— Black pepper, oregano, etc.
+    Snacks— Chips, pretzels, popcorn, crackers, nuts, etc.
+    Bread and Bakery— Bread, tortillas, pies, muffins, bagels, cookies, etc.
+    Beverages — Coffee, teabags, milk, juice, soda, beer, wine, etc.
+    Pasta, Rice and Cereal — Oats, granola, brown rice, etc. 
+    Baking — Flour, powdered sugar, baking powder, etc. 
+    Frozen Foods — Pizza, ready meals, ice cream, etc. 
+    
+    TAKE NOTE OF THE CATEGORIES FOR YOUR FOOD ITEMS."""
+
+def format_sentence(sentence):
+    print(sentence.replace('. ', '.\n'))
+format_sentence(text)
+
+
+Grocery = []
 Fruits = []
-print("Enter the name of the fruit: ")
-while True:
-    Fruit = str(input())
-    Fruits.append(Fruit)
-    if Fruit == "":
-        break
-del Fruits[-1]
-print(Fruits)
-
-#store data for vegetables
-Vegetables = [] 
-print("Enter the name of the vegetable: ")
-while True:
-    Vegetable = str(input())
-    Vegetables.append(Vegetable)
-    if Vegetable == "":
-        break
-del Vegetables[-1]
-print(Vegetables)
-
-#store data for canned goods
+Vegetables = []
 Canned_Goods = []
-print("Enter the name of the canned good: ")
-while True:
-    Canned_Good = str(input())
-    Canned_Goods.append(Canned_Good)
-    if Canned_Good == "":
-        break
-del Canned_Goods[-1]
-print(Canned_Goods)
-
-#store data for dairy
 Dairy = []
-print("Enter the name of the Dairy: ")
-while True:
-    dairy = str(input())
-    Dairy.append(dairy)
-    if dairy == "":
-        break
-del Dairy[-1]
-print(Dairy)
-
-#store data for meat
 Meat = []
-print("Enter the name of the meat: ")
-while True:
-    meat = str(input())
-    Meat.append(meat)
-    if meat == "":
-        break
-del Meat[-1]
-print(Meat)
-
-#store data for Fish_and_Seafood
 Fish_and_Seafood = []
-print("Enter the name of the fish and seafood: ")
-while True:
-    fish_and_seafood = str(input())
-    Fish_and_Seafood.append(fish_and_seafood)
-    if fish_and_seafood == "":
-        break
-del Fish_and_Seafood[-1]
-print(Fish_and_Seafood)
-
-#store data for deli
 Deli = []
-print("Enter the name of the deli: ")
-while True:
-    deli = str(input())
-    Deli.append(deli)
-    if deli == "":
-        break
-del Deli[-1]
-print(Deli)
-
-#store data for condiments and spices
 Condiments_and_Spices = []
-print("Enter the name of the condiment or spice: ")
-while True:
-    condiment = str(input())
-    Condiments_and_Spices.append(condiment)
-    if condiment == "":
-        break
-del Condiments_and_Spices[-1]
-print(Condiments_and_Spices)
-
-#store data for snacks
 Snacks = []
-print("Enter the name of the snack: ")
-while True:
-    snacks = str(input())
-    Snacks.append(snacks)
-    if snacks == "":
-        break
-del Snacks[-1]
-print(Snacks)
-
-#store data for Bread and Bakery
 Bread_and_Bakery = []
-print("Enter the name of the bread or baked item: ")
-while True:
-    bread = str(input())
-    Bread_and_Bakery.append(bread)
-    if bread == "":
-        break
-del Bread_and_Bakery[-1]
-print(Bread_and_Bakery)
-
-#store data for Beverages
 Beverages = []
-print("Enter the name of the beverage: ")
-while True:
-    beverage = str(input())
-    Beverages.append(beverage)
-    if beverage == "":
-        break
-del Beverages[-1]
-print(Beverages)
-
-#store data for pasta, rice or cereal
 Pasta_Rice_Cereal = []
-print("Enter the name of the pasta, rice, or cereal: ")
-while True:
-    pasta = str(input())
-    Pasta_Rice_Cereal.append(pasta)
-    if pasta == "":
-        break
-del Pasta_Rice_Cereal[-1]
-print(Pasta_Rice_Cereal)
-
-#store data for baking items
 Baking = []
-print("Enter the name of the baking item: ")
-while True:
-    baking = str(input())
-    Baking.append(baking)
-    if baking == "":
-        break
-del Baking[-1]
-print(Baking)
-
-#store data for frozen goods
 Frozen_Foods = []
-print("Enter the name of the frozen foods: ")
+
+#Create a list to store the user's input individually
+item = []
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+item.append([])
+
+i = 0
 while True:
-    frozen_food = str(input())
-    Frozen_Foods.append(frozen_food)
-    if frozen_food == "":
+    Name = input("Name of item: ")
+    if Name == "":
         break
-del Frozen_Foods[-1]
-print(Frozen_Foods)
+    else:
+        category = input("Category: ")
+        Purchase_date = input("Date purchased(Year-month-date): ")
+        Expiration_date = input("Expiration date(Year-month-date): ")
+        item[i].append(Name)
+        item[i].append(category)
+        item[i].append(Purchase_date)
+        item[i].append(Expiration_date)
+        
+        if item[i][1].capitalize() == 'Fruits':
+            Fruits.append(item[i])
+        if item[i][1].capitalize() == 'Vegetables':
+            Vegetables.append(item[i])
+        elif item[i][1].capitalize() == 'Canned goods':
+            Canned_Goods.append(item[i])
+        elif item[i][1].capitalize() == 'Dairy':
+            Dairy.append(item[i])
+        elif item[i][1].capitalize() == 'Meat':
+            Meat.append(item[i])
+        elif item[i][1].capitalize() == 'Fish and Seafood':
+            Fish_and_Seafood.append(item[i])
+        elif item[i][1].capitalize() == 'Deli':
+            Deli.append(item[i])
+        elif item[i][1].capitalize() == 'Condiments and Spices':
+            Condiments_and_Spices.append(item[i])
+        elif item[i][1].capitalize() == 'Snacks':
+            Snacks.append(item[i])
+        elif item[i][1].capitalize() == 'Bread and Bakery':
+            Bread_and_Bakery.append(item[i])
+        elif item[i][1].capitalize() == 'Beverages':
+            Beverages.append(item[i])
+        elif item[i][1].capitalize() == 'Pasta, Rice, and Cereal':
+            Pasta_Rice_Cereal.append(item[i])
+        elif item[i][1].capitalize() == 'Baking':
+            Baking.append(item[i])
+        elif item[i][1].capitalize() == 'Frozen foods':
+            Frozen_Foods.append(item[i])
+        
+        i+=1
+
+print("Fruits available are: " Fruits)
+print("Vegetables available are: " Vegetables)
+print("Canned goods available are: " Canned_Goods)
+print("Dairy products available are: " Dairy)
+print("Meat products available are: " Meat)
+print("Fish and Seafood items available are: " Fish_and_Seafood)
+print("Deli products available are: " Deli)
+print("Condiments and Spices available are: " Condiments_and_Spices)
+print("Snacks available are: " Snacks)
+print("Bread and Bakery items available are: " Bread_and_Bakery)
+print("Beverages available are: " Beverages)
+print("Pasta, Rice, and Ceral items available are: " Pasta_Rice_Cereal)
+print("Baking items available are: " Baking)
+print("Frozen foods available are: " Frozen_Foods)
