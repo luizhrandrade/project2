@@ -2,7 +2,6 @@ import os
 import json
 import sqlalchemy as db
 import pandas as pd
-from datetime import datetime
 
 def deleteExistingDatabase():
     myfile = "Notifood.db"
@@ -10,22 +9,30 @@ def deleteExistingDatabase():
         os.remove(myfile)
 
 
-def setupDatabase():
-    """Creates a database with necessary structure for program"""
-    engine = db.create_engine('sqlite:///Notifood.db')
-    if len(engine.table_names()) < 2:
-        engine.execute( 
-            """
-                CREATE TABLE food_items(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    purchase_date DATE,
-                    expiration_date DATE,
-                    item_name VARCHAR(100),
-                    item_category VARCHAR(40)
-                );
-            """
-        )
-    return engine
+def connectDatabase():
+    """Connects to the SQL database"""
+    return db.create_engine('sqlite:///Notifood.db')
+
+def checkDatabase(database):
+    """Checks for existing data in database"""
+    if len(database.table_names()) < 2:
+        return False
+    return True
+
+def createTable(engine, phone_number):
+    """Creates a table for food items"""
+    engine.execute( 
+        f"""
+            CREATE TABLE food_items(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                phone_number VARCHAR(15) DEFAULT {phone_number} NOT NULL,
+                purchase_date DATE,
+                expiration_date DATE,
+                item_name VARCHAR(100),
+                item_category VARCHAR(40)
+            );
+        """
+    )
 
 
 def addFoodItem(engine, name, category, purchase_date, expiration_date):
@@ -47,9 +54,22 @@ def addFoodItem(engine, name, category, purchase_date, expiration_date):
     )
 
 
-def printDatabase(engine, query):
+def removeFoodItem(engine, name):
+    """Removes a food item from the database"""
+    try:
+        engine.execute(
+            f"""
+                DELETE FROM food_items
+                WHERE item_name = \"{name}\"
+            """
+        )
+    except Exception as e:
+        print("Item doesn't exist!")
+
+
+def printDatabase(engine):
     """Prints the query table from the database"""
-    query_result = engine.execute(f"SELECT * FROM {query};").fetchall()
+    query_result = engine.execute(f"SELECT * FROM food_items;").fetchall()
     print(pd.DataFrame(query_result))
 
 
@@ -57,22 +77,17 @@ def getFoodToExpire(engine):
     """Searches database and returns items set to expire within a week"""
     query = engine.execute(
         """
-            SELECT item_name, expiration_date FROM food_items
+            SELECT 
+                phone_number,
+                item_name,
+                CAST(julianday(expiration_date) - julianday('now') AS INTEGER),
+                expiration_date FROM food_items
             WHERE julianday(expiration_date) - julianday('now') < 7;
         """
     )
-    print(pd.DataFrame(query))
-    
+    return pd.DataFrame(query).values
 
-def main():
-    # deleteExistingDatabase()
-    data = setupDatabase();
-    addFoodItem(data, "Broccoli", "Vegetables", "2022-07-5", "2022-07-09")
-    addFoodItem(data, "Strawberry", "Fruits", "2022-07-5", "2022-07-11")
-    addFoodItem(data, "Lettuce", "Vegetables", "2022-07-5", "2022-07-09")
-    addFoodItem(data, "Beef", "Meats", "2022-07-5", "2022-07-11")
-    getFoodToExpire(data)
-    # printDatabase(data, "food_items")
+# messageStr = ""
+# for food_item in food_list:
+#     messageStr += f"The item {food_item[0]} is about to expire in {food_item[1]} days ({food_item[2]})\n"
 
-if __name__ == "__main__":
-    main()
