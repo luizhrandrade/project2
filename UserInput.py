@@ -39,7 +39,7 @@ program_options = [
     {
         'type': 'list',
         'name': 'program',
-        'message': 'Please select a food category',
+        'message': 'Select program action',
         'choices': [
             "Add item",
             "Remove item", 
@@ -98,22 +98,3 @@ remove_options = [
         'message': 'Enter item to remove:',
     }
 ]
-
-
-def main():
-    answers = prompt(program_options, style=custom_style_2)
-    print(answers)
-    # a = answers.get("a")
-    # b = answers.get("b")
-    if answers.get("user_option") == "sum":
-        add(a, b)
-    elif answers.get("user_option") == "difference":
-        difference(a, b)
-    elif answers.get("user_option") == "product":
-        product(a, b)
-    elif answers.get("user_option") == "divide":
-        divide(a, b)
-
-
-if __name__ == "__main__":
-    main()

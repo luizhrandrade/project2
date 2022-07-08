@@ -1,5 +1,6 @@
 from Database import *
 from UserInput import *
+from Api import *
 
 def main():
     database = connectDatabase()
@@ -9,10 +10,10 @@ def main():
         num = prompt(phone_number, style=custom_style_2).get("phone_number")
         createTable(database, num)
     else:
-        print("Existed database detected, using existing database...")
+        print("Existed database detectesd, using existing database...")
     
     while(True):
-        next_job = prompt(phone_number, style=custom_style_2).get("program")
+        next_job = prompt(program_options, style=custom_style_2).get("program")
 
         if next_job == "Add item":
             new_item = prompt(add_options, style=custom_style_2)

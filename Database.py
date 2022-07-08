@@ -86,8 +86,3 @@ def getFoodToExpire(engine):
         """
     )
     return pd.DataFrame(query).values
-
-# messageStr = ""
-# for food_item in food_list:
-#     messageStr += f"The item {food_item[0]} is about to expire in {food_item[1]} days ({food_item[2]})\n"
-
